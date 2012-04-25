@@ -1,0 +1,8 @@
+DEBUG = True
+TEMPLATE_DEBUG = True
+
+DATABASE_ENGINE = 'sqlite3'
+DATABASE_NAME = '/tmp/dev.db'
+DATABASE_USER = ''
+DATABASE_PASSWORD = ''
+

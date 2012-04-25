@@ -1,0 +1,8 @@
+#!/bin/bash -e
+# set django admin password and email
+
+. /etc/default/inithooks
+
+[ -e $INITHOOKS_CONF ] && . $INITHOOKS_CONF
+$INITHOOKS_PATH/bin/django.py --pass="$APP_PASS" --email="$APP_EMAIL"
+

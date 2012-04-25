@@ -1,0 +1,126 @@
+turnkey-django-11.1 (1) turnkey; urgency=low
+
+  * Django:
+
+    - Transitioned to mod_wsgi from mod_python (performance).
+    - Tweaked settings.py to be more dynamic.
+    - Configured email settings.
+    - Added settings_dev.py (sets DEBUG=y and uses SQLite if DEVELOPMENT=y).
+
+    - Completely restructured Django project:
+      - Project moved to /var/www/project (was /var/www/django-sites[/apps]).
+      - Admin symlink moved to /media/admin from admin_media.
+      - Apache site renamed to django (was django-sites).
+
+    - Added python-django-doc and configured for offline access.
+
+  * Set Django admin email and password on firstboot (convenience, security).
+
+  * Set MySQL root password on firstboot (convenience, security).
+
+  * Force MySQL to use Unicode/UTF8.
+
+  * Set postfix MTA myhostname to localhost (bugfix).
+
+  * Major component versions:
+
+    python-django   1.1.1-2ubuntu1
+    mysql-server    5.1.41-3ubuntu12.8
+    sqlite          2.8.17-6build2
+    apache2         2.2.14-5ubuntu8.4
+    python2.6       2.6.5-1ubuntu6
+
+  * Note: Please refer to turnkey-core's changelog for changes common to all
+    appliances. Here we only describe changes specific to this appliance.
+
+ -- Alon Swartz <alon@turnkeylinux.org>  Sun, 19 Dec 2010 15:01:05 +0200
+
+turnkey-django-2009.10 (2) hardy; urgency=low
+
+  * Installed all security updates (see manifest for package versions).
+
+  * Install security updates on firstboot (except when running live).
+
+  * Bugfix: Updated apt preferences for auto-security updates (LP#550307).
+
+  * Trick webmin into not checking for upgrades (managed by apt).
+
+  * Updated di-live mysql mechanism and secret regeneration.
+
+  * Included latest version of inithooks and updated scripts.
+
+  * Included wget as per common request.
+
+ -- Alon Swartz <alon@turnkeylinux.org>  Mon, 29 Mar 2010 09:02:11 +0200
+
+turnkey-django-2009.10 (1) hardy; urgency=low
+
+  * Upgraded Django and pinned to update directly from Debian (security).
+
+  * Added Turnkey web control panel (replaces welcome page). Also provides
+    example Django application using template and static media urls.
+
+  * Added postfix MTA (bound to localhost) to allow sending of email from
+    web applications (e.g., password recovery). Also added webmin-postfix
+    module for convenience.
+
+  * di-live (installer) MySQL component:
+
+    - Added support for complex passwords (LP#416515)
+    - Added CLI options (user/pass/query/chroot)
+
+  * Bugfix: Removed build systems hostname from mysql user table.
+
+  * Regenerates all secrets during installation / firstboot (security).
+
+  * Major component versions:
+
+    python-django   1.0.2-1+lenny1
+    mysql-server    5.0.51a-3ubuntu5.4
+    apache2         2.2.8-1ubuntu0.11
+    python2.5       2.5.2-0ubuntu1
+
+  * Note: Please refer to turnkey-core's changelog for changes common to all
+    appliances. Here we only describe changes specific to this appliance.
+
+ -- Alon Swartz <alon@turnkeylinux.org>  Tue, 29 Sep 2009 15:39:41 +0200
+
+turnkey-django-2009.03 (1) hardy; urgency=low
+
+  * improved django passwords and secrets generation mechanism (security)
+
+    - database password is now randomly generated, and regenerated
+      during installation
+    - regenerate more secure secret key during installation
+
+  * major component versions
+
+    python-django   1.0.2-1
+    mysql-server    5.0.51a-3ubuntu5.4
+    apache2         2.2.8-1ubuntu0.5
+    python2.5       2.5.2-2ubuntu4.1
+
+ -- Alon Swartz <alon@turnkeylinux.org>  Thu, 26 Mar 2009 16:31:46 +0200
+
+turnkey-django-2009.02 (1) hardy; urgency=low
+
+  * added SSL support
+
+  * regenerate django secret key during installation
+
+  * added useful links to the default web root (e.g., the "it works!" page)
+
+  * major component versions:
+
+    python-django   1.0.2-1
+    mysql-server    5.0.51a-3ubuntu5.4
+    apache2         2.2.8-1ubuntu0.3
+    python2.5       2.5.2-2ubuntu4.1
+
+  * support configuring mysql root password during installation
+  * set empty mysql root password in live/demo mode (for convenience)
+
+  * note: please refer to turnkey-core's changelog for changes common to all
+    appliances. Here we only describe changes specific to this appliance.
+
+ -- Alon Swartz <alon@turnkeylinux.org>  Thu, 29 Jan 2009 14:31:35 +0200

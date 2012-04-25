@@ -1,0 +1,20 @@
+#include <turnkey/base>
+
+apache2
+webmin-apache      
+apache2-mpm-worker
+libapache2-mod-wsgi
+
+mysql-server
+webmin-mysql
+python-mysqldb
+
+python-sqlite
+
+python-django
+python-django-doc
+python-docutils
+libjs-jquery
+
+postfix
+webmin-postfix
