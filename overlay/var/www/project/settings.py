@@ -14,8 +14,8 @@ PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 sys.path.insert(0, os.path.join(PROJECT_ROOT, "apps"))
 
 DATABASE_ENGINE = 'mysql'
-DATABASE_NAME = 'django_db'
-DATABASE_USER = 'django_user'
+DATABASE_NAME = 'django'
+DATABASE_USER = 'django'
 DATABASE_PASSWORD = '0fdaad2d20b61cb13ca4652bc6b18923'
 
 EMAIL_HOST = "localhost"

@@ -2,9 +2,9 @@
 
 set ${DJANGO_PASS:=turnkey}
 
-DB_NAME=django_db
-DB_USER_NAME=django_user
-DB_USER_PASS=$(mcookie)
+DB_NAME=django
+DB_USER=django
+DB_PASS=$(mcookie)
 
 DJANGO_DIR=/var/www/project
 DJANGO_USER=admin
@@ -21,13 +21,13 @@ MYSQL_ADMIN="mysqladmin --user=root --password=$MYSQL_PASS"
 $MYSQL_ADMIN create $DB_NAME --default-character-set=utf8;
 
 # create database user with privileges on the database
-$MYSQL_BATCH --execute "grant all privileges on $DB_NAME.* to $DB_USER_NAME@localhost identified by '$DB_USER_PASS'; flush privileges;"
+$MYSQL_BATCH --execute "grant all privileges on $DB_NAME.* to $DB_USER@localhost identified by '$DB_PASS'; flush privileges;"
 
 # update database configuration settings and default credentials
 CONF=$DJANGO_DIR/settings.py
 sed -i "s|DATABASE_NAME = \(.*\)|DATABASE_NAME = '$DB_NAME'|" $CONF
-sed -i "s|DATABASE_USER = \(.*)\)|DATABASE_USER = '$DB_USER_NAME'|" $CONF
-sed -i "s|DATABASE_PASSWORD = \(.*\)|DATABASE_PASSWORD = '$DB_USER_PASS'|" $CONF
+sed -i "s|DATABASE_USER = \(.*)\)|DATABASE_USER = '$DB_USER'|" $CONF
+sed -i "s|DATABASE_PASSWORD = \(.*\)|DATABASE_PASSWORD = '$DB_PASS'|" $CONF
 
 # synchronize django database (mysql and sqlite)
 $DJANGO_DIR/manage.py syncdb --noinput

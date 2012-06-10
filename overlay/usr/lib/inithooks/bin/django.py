@@ -62,8 +62,8 @@ def main():
     hashpass = _get_hashpass(password)
 
     m = MySQL()
-    m.execute('UPDATE django_db.auth_user SET email=\"%s\" WHERE username=\"admin\";' % email)
-    m.execute('UPDATE django_db.auth_user SET password=\"%s\" WHERE username=\"admin\";' % hashpass)
+    m.execute('UPDATE django.auth_user SET email=\"%s\" WHERE username=\"admin\";' % email)
+    m.execute('UPDATE django.auth_user SET password=\"%s\" WHERE username=\"admin\";' % hashpass)
 
 if __name__ == "__main__":
     main()
