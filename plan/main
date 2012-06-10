@@ -16,5 +16,7 @@ python-django-doc
 python-docutils
 libjs-jquery
 
+ipython
+
 postfix
 webmin-postfix
