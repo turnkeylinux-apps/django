@@ -1,8 +1,12 @@
 DEBUG = True
 TEMPLATE_DEBUG = True
 
-DATABASE_ENGINE = 'sqlite3'
-DATABASE_NAME = '/tmp/dev.db'
-DATABASE_USER = ''
-DATABASE_PASSWORD = ''
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': '/tmp/dev.db',
+        'USER': '',
+        'PASSWORD': '',
+    }
+}
 
