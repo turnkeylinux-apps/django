@@ -35,13 +35,15 @@ DOC_ROOT = '/usr/share/doc/python-django-doc/html'
 
 MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media')
 MEDIA_URL = '/media/'
-ADMIN_MEDIA_PREFIX = '/media/admin/'
+STATIC_URL = '/media/admin/'
 
 SECRET_KEY = 'h__b!q!i6npx%@e@((w5+$_dq9d&v+maogm87edx_@978$=!=g'
 
 TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.load_template_source',
-    'django.template.loaders.app_directories.load_template_source',
+    ('django.template.loaders.cached.Loader', (
+        'django.template.loaders.filesystem.Loader',
+        'django.template.loaders.app_directories.Loader',
+    )),
 )
 
 MIDDLEWARE_CLASSES = (
@@ -54,7 +56,7 @@ ROOT_URLCONF = 'urls'
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',
-    'django.core.context_processors.auth',
+    'django.contrib.auth.context_processors.auth',
 )
 
 TEMPLATE_DIRS = (
