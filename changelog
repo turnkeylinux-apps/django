@@ -1,12 +1,15 @@
 turnkey-django-13.0 (1) turnkey; urgency=low
 
-  * Please refer to turnkey-core's changelog for changes common to all
-    appliances, as well as the following git logs:
-    
-    - https://github.com/turnkeylinux/common
-    - https://github.com/turnkeylinux-apps/django
+  * Django:
 
- -- Alon Swartz <alon@turnkeylinux.org>  Tue, 06 Aug 2013 15:37:33 +0300
+    - Latest Debian Wheezy package version of Django.
+    - Updated legacy settings [#65, #117].
+    - Removed hardcoded version in online documentation link.
+
+  * Note: Please refer to turnkey-core's changelog for changes common to all
+    appliances. Here we only describe changes specific to this appliance.
+
+ -- Alon Swartz <alon@turnkeylinux.org>  Thu, 10 Oct 2013 17:42:13 +0300
 
 turnkey-django-12.1 (1) turnkey; urgency=low
 
