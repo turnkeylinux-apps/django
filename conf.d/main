@@ -44,7 +44,7 @@ DEVELOPMENT=y python $DJANGO_DIR/create_superuser.py
 rm $DJANGO_DIR/create_superuser.py
 
 # setup admin media
-ln -s /usr/share/pyshared/django/contrib/admin/media $DJANGO_DIR/media/admin
+ln -s /usr/share/pyshared/django/contrib/admin/static $DJANGO_DIR/media/admin
 
 # configure tkl-webcp
 WEBROOT=$DJANGO_DIR/media
