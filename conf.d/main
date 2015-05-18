@@ -57,7 +57,7 @@ done
 rm -f /var/www/index.html
 
 # apache configuration
-a2dissite default
+a2dissite 000-default
 a2ensite django
 
 # stop mysql server
