@@ -6,7 +6,7 @@ DB_NAME=django
 DB_USER=django
 DB_PASS=$(mcookie)
 
-DJANGO_DIR=/var/www/project
+DJANGO_DIR=/var/www/turnkey_project
 DJANGO_USER=admin
 DJANGO_EMAIL=root@localhost
 
@@ -44,17 +44,20 @@ DEVELOPMENT=y python $DJANGO_DIR/create_superuser.py
 rm $DJANGO_DIR/create_superuser.py
 
 # setup admin media
-ln -s /usr/share/pyshared/django/contrib/admin/static $DJANGO_DIR/media/admin
+ln -s /usr/share/python-django-common/django/contrib/admin/static/admin/ $DJANGO_DIR/static/admin
 
 # configure tkl-webcp
 WEBROOT=$DJANGO_DIR/media
 
 for dir in js css images; do
-    mkdir -p $DJANGO_DIR/media/$dir
-    cp -a /var/www/$dir/* $DJANGO_DIR/media/$dir
+    mkdir -p $DJANGO_DIR/static/$dir
+    cp -a /var/www/$dir/* $DJANGO_DIR/statis/$dir
     rm -rf /var/www/$dir
 done
 rm -f /var/www/index.html
+
+#symlink django-admin.py so it is avaialble everywhere (convienience)
+ln -s /usr/lib/python2.7/dist-packages/django/bin/django-admin.py /usr/local/bin/django-admin.py
 
 # apache configuration
 a2dissite 000-default
