@@ -7,6 +7,7 @@ DB_USER=django
 DB_PASS=$(mcookie)
 
 DJANGO_DIR=/var/www/turnkey_project
+DJANGO_PROJ_DIR=$DJANGO_DIR/turnkey_project
 DJANGO_USER=admin
 DJANGO_EMAIL=root@localhost
 
@@ -24,7 +25,7 @@ $MYSQL_ADMIN create $DB_NAME --default-character-set=utf8;
 $MYSQL_BATCH --execute "grant all privileges on $DB_NAME.* to $DB_USER@localhost identified by '$DB_PASS'; flush privileges;"
 
 # update database configuration password
-CONF=$DJANGO_DIR/settings.py
+CONF=$DJANGO_PROJ_DIR/settings.py
 sed -i "s|PASSWORD.*|PASSWORD\': \'$DB_PASS\',|" $CONF
 
 # synchronize django database (mysql and sqlite)
@@ -32,22 +33,22 @@ $DJANGO_DIR/manage.py syncdb --noinput
 DEVELOPMENT=y $DJANGO_DIR/manage.py syncdb --noinput
 
 # create django superuser account
-cat>>$DJANGO_DIR/create_superuser.py<<EOF
+cat>>$DJANGO_PROJ_DIR/create_superuser.py<<EOF
 import os, settings
 os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 from django.contrib.auth.models import User
 User.objects.create_superuser('$DJANGO_USER', '$DJANGO_EMAIL', '$DJANGO_PASS')
 EOF
-python $DJANGO_DIR/create_superuser.py
-DEVELOPMENT=y python $DJANGO_DIR/create_superuser.py
+python $DJANGO_PROJ_DIR/create_superuser.py
+DEVELOPMENT=y python $DJANGO_PROJ_DIR/create_superuser.py
 
-rm $DJANGO_DIR/create_superuser.py
+rm $DJANGO_PROJ_DIR/create_superuser.py
 
 # setup admin media
 ln -s /usr/share/python-django-common/django/contrib/admin/static/admin/ $DJANGO_DIR/static/admin
 
 # configure tkl-webcp
-WEBROOT=$DJANGO_DIR/media
+WEBROOT=$DJANGO_DIR/static
 
 for dir in js css images; do
     mkdir -p $DJANGO_DIR/static/$dir
