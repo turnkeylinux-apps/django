@@ -11,7 +11,7 @@ This appliance includes all the standard features in `TurnKey Core`_,
 and on top of that:
 
 - SSL support out of the box.
-- Preconfigured example Django project located at /var/www/project
+- Preconfigured example Django project located at /var/www/turnkey_project
    
    - Integrated with Apache2 (mod\_wsgi), MySQL and Postfix.
    - Built-in administration console with embedded online documentation.
