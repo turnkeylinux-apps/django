@@ -39,26 +39,25 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 from django.contrib.auth.models import User
 User.objects.create_superuser('$DJANGO_USER', '$DJANGO_EMAIL', '$DJANGO_PASS')
 EOF
+
 python $DJANGO_PROJ_DIR/create_superuser.py
-DEVELOPMENT=y python $DJANGO_PROJ_DIR/create_superuser.py
+# This line was commented as Django1.7 appears to have a single user DB
+#DEVELOPMENT=y python $DJANGO_PROJ_DIR/create_superuser.py
 
 rm $DJANGO_PROJ_DIR/create_superuser.py
-
-# setup admin media
-ln -s /usr/share/python-django-common/django/contrib/admin/static/admin/ $DJANGO_DIR/static/admin
 
 # configure tkl-webcp
 WEBROOT=$DJANGO_DIR/static
 
 for dir in js css images; do
     mkdir -p $DJANGO_DIR/static/$dir
-    cp -a /var/www/$dir/* $DJANGO_DIR/statis/$dir
+    cp -a /var/www/$dir/* $DJANGO_DIR/static/$dir
     rm -rf /var/www/$dir
 done
 rm -f /var/www/index.html
 
-#symlink django-admin.py so it is avaialble everywhere (convienience)
-ln -s /usr/lib/python2.7/dist-packages/django/bin/django-admin.py /usr/local/bin/django-admin.py
+# setup admin media
+ln -s /usr/share/python-django-common/django/contrib/admin/static/admin/ $DJANGO_DIR/static/admin
 
 # apache configuration
 a2dissite 000-default
