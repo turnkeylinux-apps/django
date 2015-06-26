@@ -8,12 +8,12 @@
 
         <title>TurnKey Django</title>
         
-        <link rel="stylesheet" href="media/css/ui.tabs.css" type="text/css" media="print, projection, screen">
-        <link rel="stylesheet" href="media/css/base.css" type="text/css">
+        <link rel="stylesheet" href="static/css/ui.tabs.css" type="text/css" media="print, projection, screen">
+        <link rel="stylesheet" href="static/css/base.css" type="text/css">
 
-        <script src="media/js/jquery-1.2.6.js" type="text/javascript"></script>
-        <script src="media/js/ui.core.js" type="text/javascript"></script>
-        <script src="media/js/ui.tabs.js" type="text/javascript"></script>
+        <script src="static/js/jquery-1.2.6.js" type="text/javascript"></script>
+        <script src="static/js/ui.core.js" type="text/javascript"></script>
+        <script src="static/js/ui.tabs.js" type="text/javascript"></script>
         <script type="text/javascript">
             $(function() {
                 $('#container-1 > ul').tabs({ fx: { opacity: 'toggle'} });
@@ -33,15 +33,15 @@
                 <div class="fragment-content">
                     <div>
                         <a href="/admin"><img
-                        src="media/images/django.png"/>Administration</a>
+                        src="static/images/django.png"/>Administration</a>
                     </div>
                     <div>
                         <a href="https://{{ http_host }}:12320"><img
-                        src="media/images/shell.png"/>Web Shell</a>
+                        src="static/images/shell.png"/>Web Shell</a>
                     </div>
                     <div>
                         <a href="https://{{ http_host }}:12321"><img
-                        src="media/images/webmin.png"/>Webmin</a>
+                        src="static/images/webmin.png"/>Webmin</a>
                     </div>
                     <div></div>
                     <div></div>
@@ -53,11 +53,8 @@
 
                         <li>Django documentation
                         (<a href="/doc/index.html">offline</a>,
-                        <a href="http://docs.djangoproject.com/en/">online</a>)
+                        <a href="https://docs.djangoproject.com/en/1.7/">online</a>)
                         </li>
-
-                        <li>An excellent resource is the 
-                        <a href="http://www.djangobook.com">Django Book</a></li>
 
                         <li><a href="http://www.turnkeylinux.org/django">
                         TurnKey Django release notes</a></li>
