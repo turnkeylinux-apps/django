@@ -17,6 +17,3 @@ python-docutils
 libjs-jquery
 
 ipython
-
-postfix
-webmin-postfix
