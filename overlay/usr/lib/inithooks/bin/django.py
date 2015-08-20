@@ -9,6 +9,7 @@ Option:
 
 import sys
 import getopt
+import inithooks_cache
 import hashlib
 import random
 
@@ -58,6 +59,8 @@ def main():
             "Django Email",
             "Enter email address for the Django 'admin' account.",
             "admin@example.com")
+
+    inithooks_cache.write('APP_EMAIL', email)
     
     hashpass = _get_hashpass(password)
 
