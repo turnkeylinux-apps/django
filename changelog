@@ -1,3 +1,15 @@
+turnkey-django-14.1 (1) turnkey; urgency=low
+
+  * Installed security updates.
+
+  * Installed updated packages from TurnKey repo
+      - includes relevant Webmin packages (v1.780)
+
+  * Note: Please refer to turnkey-core's changelog for changes common to all
+    appliances. Here we only describe changes specific to this appliance.
+
+ -- Jeremy Davis <jeremy@turnkeylinux.org>  Tue, 01 Mar 2016 16:28:44 +1100
+
 turnkey-django-14.0 (1) turnkey; urgency=low
 
   * Upgraded to latest Jessie version of Django (1.7.7).
