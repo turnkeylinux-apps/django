@@ -4,6 +4,8 @@
 Option:
     --pass=     unless provided, will ask interactively
     --email=    unless provided, will ask interactively
+    --domain=   unless provided, will ask interactively
+                DEFAULT=www.example.com
 
 """
 
@@ -23,6 +25,8 @@ def usage(s=None):
     print >> sys.stderr, __doc__
     sys.exit(1)
 
+DEFAULT_DOMAIN="www.example.com"
+
 def _get_hashpass(password):
     salt = hashlib.sha1(str(random.random())).hexdigest()[:5]
     hash = hashlib.sha1(salt + password).hexdigest()
@@ -31,12 +35,13 @@ def _get_hashpass(password):
 def main():
     try:
         opts, args = getopt.gnu_getopt(sys.argv[1:], "h",
-                                       ['help', 'pass=', 'email='])
+                                       ['help', 'pass=', 'email=', 'domain='])
     except getopt.GetoptError, e:
         usage(e)
 
     password = ""
     email = ""
+    domain = ""
     for opt, val in opts:
         if opt in ('-h', '--help'):
             usage()
@@ -44,6 +49,10 @@ def main():
             password = val
         elif opt == '--email':
             email = val
+        elif opt == '--domain':
+            domain = val
+
+
 
     if not password:
         d = Dialog('TurnKey Linux - First boot configuration')
@@ -61,12 +70,29 @@ def main():
             "admin@example.com")
 
     inithooks_cache.write('APP_EMAIL', email)
+
+    if not domain:
+        if 'd' not in locals():
+            d = Dialog('TurnKey Linux - First boot configuration')
+
+        domain = d.get_input(
+            "Django Domain",
+            "Enter the domain to serve Django.",
+            DEFAULT_DOMAIN)
+
+    if domain == "DEFAULT":
+        domain = DEFAULT_DOMAIN
+
+    inithooks_cache.write('APP_DOMAIN', domain)
     
     hashpass = _get_hashpass(password)
 
     m = MySQL()
     m.execute('UPDATE django.auth_user SET email=\"%s\" WHERE username=\"admin\";' % email)
     m.execute('UPDATE django.auth_user SET password=\"%s\" WHERE username=\"admin\";' % hashpass)
+
+    with open('/var/lib/django/allowed_hosts', 'w') as fob:
+        fob.write(domain + '\n')
 
 if __name__ == "__main__":
     main()

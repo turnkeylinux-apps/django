@@ -27,7 +27,9 @@ TEMPLATE_DEBUG = True
 TEMPLATE_PATH = os.path.join(BASE_DIR, 'templates')
 TEMPLATE_DIRS = (TEMPLATE_PATH,)
 
-ALLOWED_HOSTS = []
+with open('/var/lib/django/allowed_hosts', 'r') as fob:
+    # Read allowed_hosts dynamically for reliable inithooks host setting
+    ALLOWED_HOSTS = [line.rstrip() for line in fob]
 
 EMAIL_HOST = "localhost"
 EMAIL_PORT = "25"
