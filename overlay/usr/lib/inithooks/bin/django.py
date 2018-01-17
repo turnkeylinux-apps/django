@@ -14,6 +14,7 @@ import getopt
 import inithooks_cache
 import hashlib
 import random
+import os
 
 from dialog_wrapper import Dialog
 from mysqlconf import MySQL
@@ -27,11 +28,7 @@ def usage(s=None):
 
 DEFAULT_DOMAIN="www.example.com"
 
-def _get_hashpass(password):
-    salt = hashlib.sha1(str(random.random())).hexdigest()[:5]
-    hash = hashlib.sha1(salt + password).hexdigest()
-    return 'sha1$%s$%s' % (salt, hash)
-    
+  
 def main():
     try:
         opts, args = getopt.gnu_getopt(sys.argv[1:], "h",
@@ -85,13 +82,13 @@ def main():
 
     inithooks_cache.write('APP_DOMAIN', domain)
     
-    hashpass = _get_hashpass(password)
 
     m = MySQL()
     m.execute('UPDATE django.auth_user SET email=\"%s\" WHERE username=\"admin\";' % email)
-    m.execute('UPDATE django.auth_user SET password=\"%s\" WHERE username=\"admin\";' % hashpass)
-
+    os.system("echo \"from django.contrib.auth.models import User; user = User.objects.get(username='admin'); user.set_password('"+ password + "');user.save()\" | /var/www/turnkey_project/manage.py shell")
+  
     with open('/var/lib/django/allowed_hosts', 'w') as fob:
+	fob.write("*" + '\n')
         fob.write(domain + '\n')
 
 if __name__ == "__main__":

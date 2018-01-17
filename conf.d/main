@@ -16,7 +16,7 @@ MYSQL_BATCH="mysql --user=root --password=$MYSQL_PASS --batch"
 MYSQL_ADMIN="mysqladmin --user=root --password=$MYSQL_PASS"
 
 # start mysql server
-/etc/init.d/mysql start
+service mysql start
 
 # create database
 $MYSQL_ADMIN create $DB_NAME --default-character-set=utf8;
@@ -29,22 +29,10 @@ CONF=$DJANGO_PROJ_DIR/settings.py
 sed -i "s|PASSWORD.*|PASSWORD\': \'$DB_PASS\',|" $CONF
 
 # synchronize django database (mysql and sqlite)
-$DJANGO_DIR/manage.py syncdb --noinput
-DEVELOPMENT=y $DJANGO_DIR/manage.py syncdb --noinput
+$DJANGO_DIR/manage.py migrate --noinput
 
 # create django superuser account
-cat>>$DJANGO_PROJ_DIR/create_superuser.py<<EOF
-import os, settings
-os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
-from django.contrib.auth.models import User
-User.objects.create_superuser('$DJANGO_USER', '$DJANGO_EMAIL', '$DJANGO_PASS')
-EOF
-
-python $DJANGO_PROJ_DIR/create_superuser.py
-# This line was commented as Django1.7 appears to have a single user DB
-#DEVELOPMENT=y python $DJANGO_PROJ_DIR/create_superuser.py
-
-rm $DJANGO_PROJ_DIR/create_superuser.py
+echo "from django.contrib.auth.models import User; User.objects.create_superuser('$DJANGO_USER', '$DJANGO_EMAIL', '$DJANGO_PASS')" | $DJANGO_DIR/manage.py shell
 
 # configure tkl-webcp
 WEBROOT=$DJANGO_DIR/static
@@ -64,4 +52,4 @@ a2dissite 000-default
 a2ensite django
 
 # stop mysql server
-/etc/init.d/mysql stop
+service mysql stop
