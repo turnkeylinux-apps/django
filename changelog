@@ -1,3 +1,16 @@
+turnkey-django-15.0 (1) turnkey; urgency=low
+
+  * Upgraded to latest Stretch version of Django (1.10.7).
+
+  * Install Adminer directly from stretch/main repo
+
+  * Replace MySQL with MariaDB
+
+  * Note: Please refer to turnkey-core's changelog for changes common to all
+    appliances. Here we only describe changes specdific to this appliance.
+
+ -- Vlad Kuzmenko <vlad.work.here@gmail.com>  Wed, 17 Feb 2017 13:18:42 +0200
+
 turnkey-django-14.2 (1) turnkey; urgency=low 
 
   * Installed security updates.
