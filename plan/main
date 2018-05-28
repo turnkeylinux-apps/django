@@ -1,18 +1,18 @@
 #include <turnkey/base>
 
 apache2
-webmin-apache      
-libapache2-mod-wsgi
+webmin-apache
+libapache2-mod-wsgi-py3
 
 mysql-server
 webmin-mysql
-python-mysqldb
+python3-mysqldb
 
 python-sqlite
 
-python-django
+python3-django
 python-django-doc
-python-docutils
+python3-docutils
 libjs-jquery
 
 ipython

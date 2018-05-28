@@ -18,6 +18,7 @@ and on top of that:
 
 - iPython for enhanced Django shell interaction.
 - Webmin modules for configuring Apache2, and MySQL.
+- Python3
 
 Credentials *(passwords set at first boot)*
 -------------------------------------------
