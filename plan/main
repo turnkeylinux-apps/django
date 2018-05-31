@@ -8,8 +8,6 @@ mysql-server
 webmin-mysql
 python3-mysqldb
 
-python-sqlite
-
 python3-django
 python-django-doc
 python3-docutils
