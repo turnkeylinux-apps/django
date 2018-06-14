@@ -1,10 +1,8 @@
 turnkey-django-15.0 (1) turnkey; urgency=low
 
-  * Upgeaded to Python3
+  * Upgraded to Python3 Django
 
   * Upgraded to latest Stretch version of Django (1.10.7).
-
-  * Install Adminer directly from stretch/main repo
 
   * Replace MySQL with MariaDB
 

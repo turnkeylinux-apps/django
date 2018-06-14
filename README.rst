@@ -16,9 +16,9 @@ and on top of that:
    - Integrated with Apache2 (mod\_wsgi), MySQL and Postfix.
    - Built-in administration console with embedded online documentation.
 
+- Python3 build of Django installed from Debian repos (security)
 - iPython for enhanced Django shell interaction.
 - Webmin modules for configuring Apache2, and MySQL.
-- Python3
 
 Credentials *(passwords set at first boot)*
 -------------------------------------------
