@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 """Set Django admin password and email
 
 Option:
@@ -21,9 +21,9 @@ from mysqlconf import MySQL
 
 def usage(s=None):
     if s:
-        print >> sys.stderr, "Error:", s
-    print >> sys.stderr, "Syntax: %s [options]" % sys.argv[0]
-    print >> sys.stderr, __doc__
+        print("Error:", s, file=sys.stderr)
+    print("Syntax: %s [options]" % sys.argv[0], file=sys.stderr)
+    print(__doc__, file=sys.stderr)
     sys.exit(1)
 
 DEFAULT_DOMAIN="www.example.com"
@@ -33,7 +33,7 @@ def main():
     try:
         opts, args = getopt.gnu_getopt(sys.argv[1:], "h",
                                        ['help', 'pass=', 'email=', 'domain='])
-    except getopt.GetoptError, e:
+    except getopt.GetoptError as e:
         usage(e)
 
     password = ""
@@ -84,11 +84,11 @@ def main():
     
 
     m = MySQL()
-    m.execute('UPDATE django.auth_user SET email=\"%s\" WHERE username=\"admin\";' % email)
+    m.execute('UPDATE django.auth_user SET email=%s WHERE username=\"admin\";', (email,))
     os.system("echo \"from django.contrib.auth.models import User; user = User.objects.get(username='admin'); user.set_password('"+ password + "');user.save()\" | /var/www/turnkey_project/manage.py shell")
   
     with open('/var/lib/django/allowed_hosts', 'w') as fob:
-	fob.write("*" + '\n')
+        fob.write("*" + '\n')
         fob.write(domain + '\n')
 
 if __name__ == "__main__":
