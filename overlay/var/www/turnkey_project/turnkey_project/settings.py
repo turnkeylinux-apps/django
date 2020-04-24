@@ -42,6 +42,7 @@ DEFAULT_FROM_EMAIL = "noreply@example.com"
 # Application definition
 
 INSTALLED_APPS = [
+    'django.contrib.admindocs',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
