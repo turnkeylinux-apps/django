@@ -1,4 +1,4 @@
-#!/bin/sh -ex
+#!/bin/bash -ex
 
 set ${DJANGO_PASS:=turnkey}
 
@@ -11,18 +11,12 @@ DJANGO_PROJ_DIR=$DJANGO_DIR/turnkey_project
 DJANGO_USER=admin
 DJANGO_EMAIL=root@localhost
 
-# convenience execution variables
-MYSQL_BATCH="mysql --user=root --password=$MYSQL_PASS --batch"
-MYSQL_ADMIN="mysqladmin --user=root --password=$MYSQL_PASS"
-
 # start mysql server
 service mysql start
 
-# create database
-$MYSQL_ADMIN create $DB_NAME --default-character-set=utf8;
-
-# create database user with privileges on the database
-$MYSQL_BATCH --execute "grant all privileges on $DB_NAME.* to $DB_USER@localhost identified by '$DB_PASS'; flush privileges;"
+# create database & user
+mysqladmin create $DB_NAME --default-character-set=utf8;
+mysql --batch --execute "grant all privileges on $DB_NAME.* to $DB_USER@localhost identified by '$DB_PASS'; flush privileges;"
 
 # update database configuration password
 CONF=$DJANGO_PROJ_DIR/settings.py
