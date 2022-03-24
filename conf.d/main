@@ -11,6 +11,11 @@ DJANGO_PROJ_DIR=$DJANGO_DIR/turnkey_project
 DJANGO_USER=admin
 DJANGO_EMAIL=root@localhost
 
+cd /var/www
+django-admin startproject turnkey_project
+cd $DJANGO_DIR
+python3 manage.py startapp turnkey_app
+
 # start mysql server
 service mysql start
 
@@ -20,26 +25,50 @@ mysql --batch --execute "grant all privileges on $DB_NAME.* to $DB_USER@localhos
 
 # update database configuration password
 CONF=$DJANGO_PROJ_DIR/settings.py
-sed -i "s|PASSWORD.*|PASSWORD\': \'$DB_PASS\',|" $CONF
+
+sed -i "/^DATABASES/,/'ENGINE'/ s/'ENGINE':.*/'ENGINE': 'django.db.backends.mysql',/1" $CONF
+sed -i "/^DATABASES/,/'NAME'/ s/'NAME':.*/'NAME': '$DB_NAME',/1" $CONF
+sed -i "/^DATABASES/,/'NAME'/ {
+    /'NAME'/ a \        'PASSWORD': '$DB_PASS',
+}" $CONF
+sed -i "/^DATABASES/,/'NAME'/{
+    /'NAME'/ a \        'USER': '$DB_USER',
+}" $CONF
+
+# inject some code to dynamically fill ALLOWED_HOSTS via contents of
+# /var/lib/django/allowed_hosts
+sed -i "/ALLOWED_HOSTS/ s|^.*$|\
+with open('/var/lib/django/allowed_hosts', 'r') as fob:\n\
+    # Read allowed_hosts dynamically for reliable inithooks host setting\n\
+    ALLOWED_HOSTS = [line.rstrip() for line in fob]|" $CONF
+
+sed -i "/TEMPLATES/,/WSGI_APPLICATION/ {
+    /'DIRS'/ s/'DIRS'.*$/'DIRS': [ os.path.join(BASE_DIR, 'templates')],/
+}" $CONF
+
 
 # synchronize django database (mysql and sqlite)
-$DJANGO_DIR/manage.py migrate --noinput
+$DJANGO_DIR/manage.py migrate
 
 # create django superuser account
 echo "from django.contrib.auth.models import User; User.objects.create_superuser('$DJANGO_USER', '$DJANGO_EMAIL', '$DJANGO_PASS')" | $DJANGO_DIR/manage.py shell
 
 # configure tkl-webcp
-WEBROOT=$DJANGO_DIR/static
+DJANGO_APP_DIR="$DJANGO_DIR"
 
 for dir in js css images; do
-    mkdir -p $DJANGO_DIR/static/$dir
-    cp -a /var/www/$dir/* $DJANGO_DIR/static/$dir
+    mkdir -p $DJANGO_APP_DIR/static/$dir
+    cp -a /var/www/$dir/* $DJANGO_APP_DIR/static/$dir
     rm -rf /var/www/$dir
 done
+mv /var/www/templates $DJANGO_APP_DIR/templates
+mv /var/www/app_urls.py $DJANGO_APP_DIR/turnkey_app/urls.py
+mv /var/www/app_views.py $DJANGO_APP_DIR/turnkey_app/views.py
+mv /var/www/proj_urls.py $DJANGO_APP_DIR/turnkey_project/urls.py
 rm -f /var/www/index.html
 
 # setup admin media
-ln -s /usr/share/python-django-common/django/contrib/admin/static/admin/ $DJANGO_DIR/static/admin
+ln -s /usr/lib/python3/dist-packages/django/contrib/admin/static/admin/ $DJANGO_APP_DIR/static/admin
 
 # apache configuration
 a2dissite 000-default
@@ -47,3 +76,4 @@ a2ensite django
 
 # stop mysql server
 service mysql stop
+exit 1
