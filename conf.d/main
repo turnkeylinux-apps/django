@@ -76,4 +76,3 @@ a2ensite django
 
 # stop mysql server
 service mysql stop
-exit 1
