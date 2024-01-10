@@ -43,7 +43,7 @@ with open('/var/lib/django/allowed_hosts', 'r') as fob:\n\
     ALLOWED_HOSTS = [line.rstrip() for line in fob]|" $CONF
 
 sed -i "/TEMPLATES/,/WSGI_APPLICATION/ {
-    /'DIRS'/ s/'DIRS'.*$/'DIRS': [ os.path.join(BASE_DIR, 'templates')],/
+    /'DIRS'/ s|'DIRS'.*$|'DIRS': [ Path(BASE_DIR) /  'templates'],|
 }" $CONF
 
 
