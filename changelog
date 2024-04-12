@@ -1,3 +1,11 @@
+turnkey-django-18.1 (1) turnkey; urgency=low
+
+  * TODO - ADD OTHER RELEASE NOTES HERE...
+
+  * Remove webshell link from landing page - closes 1927.
+
+ -- Jeremy Davis <jeremy@turnkeylinux.org>  Wed, 10 Apr 2024 23:24:27 +0000
+
 turnkey-django-18.0 (1) turnkey; urgency=low
 
   * Upgraded to latest Bookworm version of Django (3.2.19).
