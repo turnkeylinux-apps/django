@@ -11,19 +11,20 @@ This appliance includes all the standard features in `TurnKey Core`_,
 and on top of that:
 
 - SSL support out of the box.
-- Preconfigured example Django project located at /var/www/turnkey_project
+- Preconfigured Django 4.2 example project located at
+  ``/var/www/turnkey_project``.
    
-   - Integrated with Apache2 (mod\_wsgi), MySQL and Postfix.
+   - Integrated with Apache2 (mod\_wsgi), MariaDB and Postfix.
    - Built-in administration console with embedded online documentation.
 
-- Python3 build of Django installed from Debian repos (security)
-- iPython for enhanced Django shell interaction.
-- Webmin modules for configuring Apache2, and MySQL.
+- Python 3 build of Django installed from Debian repositories.
+- IPython for enhanced Django shell interaction.
+- Webmin modules for configuring Apache2 and MariaDB.
 
 Credentials *(passwords set at first boot)*
 -------------------------------------------
 
-- Webmin, SSH, MySQL: username **root**
+- Webmin, SSH, MariaDB: username **root**
 - Django admin console: username **admin**
 
 .. _Django: http://www.djangoproject.com/
