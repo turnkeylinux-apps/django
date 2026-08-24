@@ -22,6 +22,8 @@ installed=$(dpkg-query -W -f='${Version}' python3-django)
 
 curl --insecure --fail --silent --show-error "$base/" |
     grep -q '<h1>TurnKey Django</h1>'
+curl --insecure --fail --silent --show-error \
+    "$base/static/images/django.png" >/dev/null
 curl --insecure --fail --silent --show-error "$base/doc/index.html" |
     grep -qi 'Django documentation'
 
@@ -65,8 +67,7 @@ candidate=$(awk '/Candidate:/ {print $2}' "$policy")
 test -n "$candidate"
 test "$candidate" != '(none)'
 grep -Eq 'http://deb\.debian\.org/debian trixie/main' "$policy"
-grep -Eq 'http://security\.debian\.org/debian-security trixie-security/main' \
-    "$policy"
+grep -Eq 'http://(security\.debian\.org|deb\.debian\.org)/debian-security trixie-security/main' "$policy"
 test "$(dpkg-query -W -f='${Version}' python3-django)" = "$before"
 
 cat >"$result" <<EOF
