@@ -3,6 +3,7 @@ set -Eeuo pipefail
 umask 077
 
 result=${TKL_TEST_RESULT:?TKL_TEST_RESULT is required}
+trap 'printf "failed_line=%s\n" "$LINENO" >"$result"' ERR
 app_password=${TKL_TEST_APP_PASS:?TKL_TEST_APP_PASS is required}
 db_password=${TKL_TEST_DB_PASS:?TKL_TEST_DB_PASS is required}
 base=https://127.0.0.1
