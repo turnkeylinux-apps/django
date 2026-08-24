@@ -9,9 +9,10 @@ base=https://127.0.0.1
 cookie_jar=/tmp/tkl-django-cookies.$$
 login_page=/tmp/tkl-django-login.$$
 admin_page=/tmp/tkl-django-admin.$$
+policy=/tmp/tkl-django-apt-policy.$$
 
 cleanup() {
-    rm -f -- "$cookie_jar" "$login_page" "$admin_page"
+    rm -f -- "$cookie_jar" "$login_page" "$admin_page" "$policy"
 }
 trap cleanup EXIT
 
@@ -59,18 +60,20 @@ dpkg-query -W webmin-apache webmin-mysql >/dev/null
 
 before=$installed
 apt-get update >/dev/null
-candidate=$(apt-cache policy python3-django | awk '/Candidate:/ {print $2}')
+apt-cache policy python3-django >"$policy"
+candidate=$(awk '/Candidate:/ {print $2}' "$policy")
 test -n "$candidate"
 test "$candidate" != '(none)'
-apt-get indextargets --format '$(SITE)|$(SUITE)|$(COMPONENT)' |
-    grep -Eq '^deb\.debian\.org\|trixie(-updates)?\|main$'
+grep -Eq 'http://deb\.debian\.org/debian trixie/main' "$policy"
+grep -Eq 'http://security\.debian\.org/debian-security trixie-security/main' \
+    "$policy"
 test "$(dpkg-query -W -f='${Version}' python3-django)" = "$before"
 
 cat >"$result" <<EOF
 package_source=Debian Trixie APT repository, python3-django
 installed_version=$installed
 runtime_checks=normal init; Apache and MariaDB active; HTTPS sample site and bundled documentation; mod_wsgi loaded; administrator HTTP login; Django ORM MariaDB access; root database login; IPython Django shell; Webmin Apache and MariaDB modules installed
-updater_command=apt-get update; apt-cache policy python3-django; apt-get indextargets
+updater_command=apt-get update; apt-cache policy python3-django
 updater_result=signed metadata refreshed; installed version unchanged; eligible candidate $candidate
 updater_channel=Debian Trixie and Trixie security repositories
 integrity_evidence=APT accepted Debian signed repository metadata and dpkg reports python3-django $installed installed
