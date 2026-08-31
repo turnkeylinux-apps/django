@@ -1,3 +1,14 @@
+turnkey-django-19.0 (1) turnkey; urgency=low
+
+  * Rebuild the sample project with Debian Trixie's Django 4.2 LTS, Python
+    3.13, Apache mod_wsgi and MariaDB packages.
+
+  * Update the bundled sample project's Django documentation links.
+
+  * Upgrade the base distribution to Debian 13/Trixie.
+
+ -- Jeremy Davis <jeremy@turnkeylinux.org>  Mon, 24 Aug 2026 00:00:00 +0000
+
 turnkey-django-18.1 (1) turnkey; urgency=low
 
   * TODO - ADD OTHER RELEASE NOTES HERE...
